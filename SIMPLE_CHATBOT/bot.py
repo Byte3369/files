@@ -2,6 +2,7 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 from chatterbot.trainers import ChatterBotCorpusTrainer
+from cleaner import clean_corpus
 
 #Creation of ChatBot object
 my_chatbot = ChatBot("Byte",read_only=True,Logic_adapters=['chatterbot.logic.BestMatch'],storage_adapters="chatterbot.storage.SQLStorageAdapter")
@@ -9,6 +10,13 @@ my_chatbot = ChatBot("Byte",read_only=True,Logic_adapters=['chatterbot.logic.Bes
 #Train Chatbot with the built in library package
 chatbot=ChatterBotCorpusTrainer(my_chatbot )
 chatbot.train("chatterbot.corpus.english")
+
+#Train Bot with whatsapp chat
+CHAT_FILE= "chat.txt"
+
+clean_pro_file=clean_corpus(CHAT_FILE)
+trainer = ListTrainer(chatbot)
+trainer.train(clean_pro_file)
 
 #exit commands
 exit_commands = (":q", "quit", "exit")
